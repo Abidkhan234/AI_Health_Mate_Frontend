@@ -66,19 +66,7 @@ const UploadReportPage = () => {
     });
   };
 
-  const { isPending, data, isError, error } = uploadReportMutation;
-
-  useEffect(() => {
-    if (isError) {
-      if (error.status == 401) {
-        navigate("/");
-        toast.error(error.message);
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        setUserData(null);
-      }
-    }
-  }, [isError]);
+  const { isPending, data} = uploadReportMutation;
 
   return (
     <OverlayWrapper isStarted={showOverLay}>
