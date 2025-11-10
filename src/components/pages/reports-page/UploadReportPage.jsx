@@ -16,7 +16,7 @@ import CustomTextArea from "@/components/forms/inputs/CustomTextArea";
 import CustomSelectMenu from "@/components/forms/inputs/CustomSelect";
 import toast from "react-hot-toast";
 import SummaryDialog from "@/components/common/drop-down-comps/SummaryDialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OverlayWrapper from "@/components/wrappers/OverlayWrapper";
 
 const itemsArr = [
@@ -61,12 +61,24 @@ const UploadReportPage = () => {
         resetForm();
       },
       onError: (res) => {
-        toast.error(res);
+        toast.error(res.message);
       },
     });
   };
 
-  const { isPending, data } = uploadReportMutation;
+  const { isPending, data, isError, error } = uploadReportMutation;
+
+  useEffect(() => {
+    if (isError) {
+      if (error.status == 401) {
+        navigate("/");
+        toast.error(error.message);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setUserData(null);
+      }
+    }
+  }, [isError]);
 
   return (
     <OverlayWrapper isStarted={showOverLay}>

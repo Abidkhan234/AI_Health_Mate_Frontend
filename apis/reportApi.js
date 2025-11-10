@@ -39,7 +39,7 @@ const handleDeleteReport = async (id) => {
         return { message: data.message }
     } catch (error) {
         console.log("Error while Deleting report", error);
-        throw error.response.data.message
+        throw { status: error.response?.data?.status, message: error.response?.data?.message || "Failed to fetch reports" };
     }
 }
 
@@ -65,7 +65,7 @@ const handleAddReport = async (payload) => {
         return { message: data.message, summary: data.summary, error: data.error, is_summarized: data.is_summarized, report_description: data.report_description, report_title: data.report_title }
     } catch (error) {
         console.log("Error while Updating  report", error);
-        throw error.response.data.message
+        throw { status: error.response?.data?.status, message: error.response?.data?.message || "Failed to fetch reports" };
     }
 }
 
@@ -89,7 +89,7 @@ const handleReportUpdate = async ({ payload, id }) => {
         return { message: data.message, summary: data?.summary, error: data?.error, is_summarized: data?.is_summarized, report_description: data?.report_description, report_title: data?.report_title }
     } catch (error) {
         console.log("Error while Adding  report", error);
-        throw error.response.data.message
+        throw { status: error.response?.data?.status, message: error.response?.data?.message || "Failed to fetch reports" };
     }
 }
 
