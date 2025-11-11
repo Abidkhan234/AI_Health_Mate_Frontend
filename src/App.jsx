@@ -70,8 +70,16 @@ const App = () => {
             </Route>
             <Route element={<AuthRoute />}>
               <Route element={<AuthLayout />}>
-                <Route index element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                  index
+                  element={<LoginPage />}
+                  errorElement={<FallBackErrorComp />}
+                />
+                <Route
+                  path="/register"
+                  element={<RegisterPage />}
+                  errorElement={<FallBackErrorComp />}
+                />
               </Route>
             </Route>
             <Route path="/*" element={<NotFoundPage />} />
