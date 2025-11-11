@@ -32,9 +32,11 @@ const ReportHistoryPage = () => {
 
   return (
     <section className="w-full h-full">
-      <>
-        <FilterMenu />
-      </>
+      {data?.reports?.length >= 1 && (
+        <>
+          <FilterMenu />
+        </>
+      )}
       <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-5 gap-3">
         {isLoading ? (
           <>

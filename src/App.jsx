@@ -5,8 +5,6 @@ import ProtectedRoute from "@/components/routes/ProtectRoute";
 import AuthRoute from "@/components/routes/AuthRoute";
 import LoginPage from "@/components/pages/auth/LoginPage";
 import RegisterPage from "@/components/pages/auth/RegisterPage";
-import UploadReportPage from "@/components/pages/reports-page/UploadReportPage";
-import NotFoundPage from "@/components/pages/NotFoundPage";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { Toaster } from "react-hot-toast";
@@ -15,6 +13,12 @@ import FallBackSpinner from "@/components/common/fall-back-ui-comps/FallBackSpin
 
 const ReportHistoryPage = lazy(() =>
   import("@/components/pages/reports-page/ReportHistoryPage")
+);
+
+const NotFoundPage = lazy(() => import("@/components/pages/NotFoundPage"));
+
+const UploadReportPage = lazy(() =>
+  import("@/components/pages/reports-page/UploadReportPage")
 );
 
 const App = () => {
