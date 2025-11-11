@@ -25,8 +25,10 @@ import toast from "react-hot-toast";
 import LoadingButton from "@/components/Buttons/LoadingBtn";
 import useUIContext from "../../../contexts/UIContext";
 import { jwtDecode } from "jwt-decode";
+import { useErrorBoundary } from "react-error-boundary";
 
 export function LoginForm({ className, ...props }) {
+  const errorBoundary = useErrorBoundary();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { setUserData } = useUIContext();
@@ -67,6 +69,7 @@ export function LoginForm({ className, ...props }) {
         }, 1000);
       },
       onError: (res) => {
+        errorBoundary.showBoundary();
         toast.error(res);
       },
     });

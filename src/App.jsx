@@ -10,6 +10,7 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import { Toaster } from "react-hot-toast";
 import { Suspense, lazy } from "react";
 import FallBackSpinner from "@/components/common/fall-back-ui-comps/FallBackSpinner";
+import { ErrorBoundary } from "react-error-boundary";
 
 const ReportHistoryPage = lazy(() =>
   import("@/components/pages/reports-page/ReportHistoryPage")
@@ -19,6 +20,10 @@ const NotFoundPage = lazy(() => import("@/components/pages/NotFoundPage"));
 
 const UploadReportPage = lazy(() =>
   import("@/components/pages/reports-page/UploadReportPage")
+);
+
+const FallBackErrorComp = lazy(() =>
+  import("@/components/common/fall-back-ui-comps/FallBackErrorComp")
 );
 
 const App = () => {
@@ -45,27 +50,33 @@ const App = () => {
         />
       </>
       <Suspense fallback={<FallBackSpinner />}>
-        <Routes>
-          <Route element={<ProtectedRoute />}>
-            <Route element={<DashboardLayout />}>
-              <Route
-                path="/dashboard/report-history"
-                element={<ReportHistoryPage />}
-              />
-              <Route
-                path="/dashboard/upload-report"
-                element={<UploadReportPage />}
-              />
+        <ErrorBoundary
+          FallbackComponent={({ error, resetErrorBoundary }) => (
+            <FallBackErrorComp error={error} resetError={resetErrorBoundary} />
+          )}
+        >
+          <Routes>
+            <Route element={<ProtectedRoute />}>
+              <Route element={<DashboardLayout />}>
+                <Route
+                  path="/dashboard/report-history"
+                  element={<ReportHistoryPage />}
+                />
+                <Route
+                  path="/dashboard/upload-report"
+                  element={<UploadReportPage />}
+                />
+              </Route>
             </Route>
-          </Route>
-          <Route element={<AuthRoute />}>
-            <Route element={<AuthLayout />}>
-              <Route index element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
+            <Route element={<AuthRoute />}>
+              <Route element={<AuthLayout />}>
+                <Route index element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+              </Route>
             </Route>
-          </Route>
-          <Route path="/*" element={<NotFoundPage />} />
-        </Routes>
+            <Route path="/*" element={<NotFoundPage />} />
+          </Routes>
+        </ErrorBoundary>
       </Suspense>
     </div>
   );

@@ -8,7 +8,7 @@ const handleLogin = async (payload) => {
         return { message: data.message, accessToken: data.accessToken, refreshToken: data.refreshToken }
     } catch (error) {
         console.log("Error while Logging", error);
-        throw error.response.data.message;
+        throw error?.response?.data?.message || "Failed to login";
     }
 }
 
